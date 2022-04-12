@@ -1,9 +1,7 @@
 package model
 
-import "gorm.io/gorm"
-
 type Example struct {
-	gorm.Model
+	// gorm.Model
 	ID       int
 	Path     string
 	NodeName string

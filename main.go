@@ -2,15 +2,16 @@ package main
 
 import (
 	"web-frame/controller"
+	"web-frame/util"
 
 	"github.com/kataras/iris/v12"
-	"github.com/kataras/iris/v12/mvc"
 )
 
 func main() {
+	util.InitConfig()
 	app := iris.New()
-	serviceTree := app.Party("/")
-	m := mvc.New(serviceTree)
-	m.Handle(new(controller.ExampleController))
+	stApp := app.Party("/")
+	example := &controller.ExampleController{}
+	stApp.Get("/", example.Get)
 	app.Listen(":8080")
 }

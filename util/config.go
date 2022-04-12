@@ -1,20 +1,26 @@
 package util
 
 import (
+	"flag"
 	"os"
 
 	log "github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
-func init() {
-	viper.SetConfigName("config")
-	curPath, err := ExecPath()
-	if err != nil {
-		log.Panicf("Get current path error: %w\n", err)
+func InitConfig() {
+	var configFile string
+	flag.StringVar(&configFile, "config.file", "", "config file path")
+	flag.Parse()
+	if configFile == "" {
+		curPath, err := ExecPath()
+		if err != nil {
+			log.Panicf("Get current path error: %w", err)
+		}
+		configFile = curPath + string(os.PathSeparator) + "config/common.toml"
 	}
-	viper.AddConfigPath(curPath + string(os.PathSeparator) + "config")
+	viper.SetConfigFile(configFile)
 	if err := viper.ReadInConfig(); err != nil {
-		log.Panicf("Fatal error config file: %w\n", err)
+		log.Panicf("Fatal error config file: %w", err)
 	}
 }
