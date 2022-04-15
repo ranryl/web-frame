@@ -1,0 +1,233 @@
+{
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "swagger": "2.0",
+  "info": {
+    "description": "the purpose of this application is to provide an application\nthat is using plain go code to define an API",
+    "title": "Service Tree API.",
+    "contact": {
+      "email": "ruilong.ran@nio.com"
+    },
+    "version": "0.0.1"
+  },
+  "host": "localhost:8080",
+  "basePath": "/node",
+  "paths": {
+    "/AddNode": {
+      "post": {
+        "produces": [
+          "application/json"
+        ],
+        "tags": [
+          "node"
+        ],
+        "summary": "add node",
+        "operationId": "addNode",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "uint64",
+            "x-go-name": "ParentID",
+            "name": "parent_id",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "x-go-name": "NodeName",
+            "name": "node_name",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/defaultResponse"
+          },
+          "400": {
+            "$ref": "#/responses/defaultResponse"
+          }
+        }
+      }
+    },
+    "/getAllChilds": {
+      "get": {
+        "tags": [
+          "node"
+        ],
+        "summary": "get all childs by id",
+        "operationId": "getAllChilds",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "uint32",
+            "description": "node id",
+            "name": "id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/responseData"
+          },
+          "400": {
+            "$ref": "#/responses/defaultResponse"
+          }
+        }
+      }
+    },
+    "/getNode": {
+      "get": {
+        "tags": [
+          "node"
+        ],
+        "summary": "get node by nodeID",
+        "operationId": "getNode",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "uint32",
+            "description": "node id",
+            "name": "id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/responseData"
+          },
+          "400": {
+            "$ref": "#/responses/defaultResponse"
+          }
+        }
+      }
+    },
+    "/getOneChilds": {
+      "get": {
+        "tags": [
+          "node"
+        ],
+        "summary": "get direct childs by id",
+        "operationId": "getOneChilds",
+        "parameters": [
+          {
+            "type": "integer",
+            "format": "uint32",
+            "description": "node id",
+            "name": "id",
+            "in": "query",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/responseData"
+          },
+          "400": {
+            "$ref": "#/responses/defaultResponse"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "ServiceTree": {
+      "type": "object",
+      "properties": {
+        "CreatedAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "ID": {
+          "type": "integer",
+          "format": "uint64"
+        },
+        "NodeName": {
+          "type": "string"
+        },
+        "Path": {
+          "type": "string"
+        },
+        "UpdatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "x-go-package": "git.nevint.com/aa-devops/service-tree/model"
+    },
+    "defaultResponse": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "msg": {
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "git.nevint.com/aa-devops/service-tree/controller"
+    },
+    "responseTreeData": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Code"
+        },
+        "data": {
+          "description": "model.ServiceTree",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ServiceTree"
+          },
+          "x-go-name": "Data"
+        },
+        "msg": {
+          "type": "string",
+          "x-go-name": "Msg"
+        }
+      },
+      "x-go-package": "git.nevint.com/aa-devops/service-tree/controller"
+    }
+  },
+  "responses": {
+    "defaultResponse": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/defaultResponse"
+      }
+    },
+    "responseData": {
+      "description": "",
+      "schema": {
+        "$ref": "#/definitions/responseTreeData"
+      }
+    }
+  },
+  "securityDefinitions": {
+    "api_key": {
+      "type": "apiKey",
+      "name": "KEY",
+      "in": "header"
+    }
+  },
+  "security": [
+    {
+      "api_key": [
+        "xxxx"
+      ]
+    }
+  ]
+}
