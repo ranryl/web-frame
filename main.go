@@ -6,7 +6,7 @@
 // 	   Host: localhost:8080
 // 	   BasePath: /node
 // 	   Schemes: http, https
-// 	   Contact: ruilong.ran@nio.com
+// 	   Contact: xxxx
 //     Consumes:
 //     - application/json
 //
